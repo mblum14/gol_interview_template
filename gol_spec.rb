@@ -10,6 +10,7 @@ describe 'The Game of Life' do
   def o
     Cell.new(:alive)
   end
+
   describe 'can be initialized by rows' do
     let(:game) { Gol.new([x, x, x],
                          [o, o, o],
@@ -36,55 +37,56 @@ describe 'The Game of Life' do
       ]
       expect(game.board).to eq(expected)
     end
-
   end
 
   describe Cell do
+    let(:state) { { dead: false, alive: true } }
+
     describe 'next!' do
       it 'stays dead with less than three neighbors' do
-        cell = Cell.new(false)
+        cell = Cell.new(state[:dead])
         cell.neighbors = 2
         cell.next!
         expect(cell).not_to be_alive
       end
 
       it 'is born with exactly three neighbors' do
-        cell = Cell.new(false)
+        cell = Cell.new(state[:dead])
         cell.neighbors = 3
         cell.next!
         expect(cell).to be_alive
       end
 
       it 'dies with 0 neighbors' do
-        cell = Cell.new('o')
+        cell = Cell.new(state[:alive])
         cell.neighbors = 0
         cell.next!
         expect(cell).not_to be_alive
       end
 
       it 'dies with 1 neighbor' do
-        cell = Cell.new('o')
+        cell = Cell.new(state[:alive])
         cell.neighbors = 1
         cell.next!
         expect(cell).not_to be_alive
       end
 
       it 'continues living with exactly 2 neighbors' do
-        cell = Cell.new('o')
+        cell = Cell.new(state[:alive])
         cell.neighbors = 2
         cell.next!
         expect(cell).to be_alive
       end
 
       it 'continues living with exactly 3 neighbors' do
-        cell = Cell.new('o')
+        cell = Cell.new(state[:alive])
         cell.neighbors = 3
         cell.next!
         expect(cell).to be_alive
       end
 
       it 'dies with more than 3 neighbors' do
-        cell = Cell.new('o')
+        cell = Cell.new(state[:alive])
         cell.neighbors = 4
         cell.next!
         expect(cell).not_to be_alive
