@@ -15,6 +15,9 @@ describe 'The Game of Life' do
     let(:game) { Gol.new([x, x, x],
                          [o, o, o],
                          [x, x, x]) }
+    let(:overcrowding) { Gol.new([x, o, x],
+                                 [o, o, o],
+                                 [x, o, x]) }
     subject { game }
     its(:height) { is_expected.to eq(3) }
     its(:width)  { is_expected.to eq(3) }
@@ -36,6 +39,16 @@ describe 'The Game of Life' do
         [x, o, x]
       ]
       expect(game.board).to eq(expected)
+    end
+
+    it 'calculates the next state' do
+      overcrowding.next!
+      expected = [
+        [o, o, o],
+        [o, x, o],
+        [o, o, o]
+      ]
+      expect(overcrowding.board).to eq(expected)
     end
   end
 
